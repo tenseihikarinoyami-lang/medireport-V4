@@ -1,0 +1,28 @@
+{
+    "name": "MediReport Pro V5",
+    "short_name": "MediReport",
+    "description": "Sistema Integral de Reportes Médicos - Municipio Santiago Mariño",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a1e",
+    "theme_color": "#00f3ff",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "/medireport-icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/medireport-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "categories": [
+        "medical",
+        "health",
+        "productivity"
+    ],
+    "lang": "es"
+}

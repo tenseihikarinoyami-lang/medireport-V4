@@ -1,0 +1,16 @@
+{
+    "name": "medireport-local-sync",
+    "version": "1.0.0",
+    "description": "Servicio de respaldo local diario sincronizado con InsForge",
+    "main": "local-sync.js",
+    "type": "module",
+    "scripts": {
+        "start": "node local-sync.js",
+        "backup:now": "node local-sync.js force"
+    },
+    "dependencies": {
+        "axios": "^1.6.8",
+        "node-cron": "^3.0.3",
+        "dotenv": "^16.4.5"
+    }
+}
