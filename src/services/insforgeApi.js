@@ -128,29 +128,48 @@ export const InsForgeService = {
     getUsers: async () => {
         const { data, error } = await db.from('users').select()
         if (error) { console.error('InsForge getUsers:', error); return [] }
-        return data || []
+        return (data || []).map(u => ({
+            ...u,
+            isActive: u.is_active !== false,
+            mustChangePassword: !!u.must_change_password,
+            createdAt: u.created_at
+        }))
     },
     createUser: async (userData) => {
         const payload = {
             id: userData.id,
             name: userData.name,
             email: userData.email,
+            password: userData.password,
             role: userData.role,
+            avatar: userData.avatar || '👤',
             specialty: userData.specialty || '',
             center: userData.center || '',
             asic: userData.asic || '',
             cedula: userData.cedula || '',
             phone: userData.phone || '',
-            isActive: userData.isActive ? 'true' : 'false',
-            createdAt: userData.createdAt || new Date().toISOString()
+            is_active: userData.isActive !== false,
+            must_change_password: !!userData.mustChangePassword
         }
         const { data, error } = await db.from('users').insert(payload).select()
         if (error) console.error('InsForge createUser:', error)
         return data
     },
     updateUser: async (id, userData) => {
+        const payload = {}
+        if (userData.name !== undefined) payload.name = userData.name
+        if (userData.role !== undefined) payload.role = userData.role
+        if (userData.specialty !== undefined) payload.specialty = userData.specialty
+        if (userData.center !== undefined) payload.center = userData.center
+        if (userData.asic !== undefined) payload.asic = userData.asic
+        if (userData.cedula !== undefined) payload.cedula = userData.cedula
+        if (userData.phone !== undefined) payload.phone = userData.phone
+        if (userData.isActive !== undefined) payload.is_active = userData.isActive !== false
+        if (userData.password !== undefined) payload.password = userData.password
+        if (userData.mustChangePassword !== undefined) payload.must_change_password = !!userData.mustChangePassword
+
         const { data, error } = await db.from('users')
-            .update({ name: userData.name, role: userData.role, isActive: userData.isActive ? 'true' : 'false' })
+            .update(payload)
             .eq('id', id).select()
         if (error) console.error('InsForge updateUser:', error)
         return data
